@@ -1,0 +1,153 @@
+/* --- Estilos base (igual que antes) --- */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--color-fondo-oscuro);
+  color: var(--color-texto-claro);
+  padding: 1rem 2rem;
+  position: relative; /* Necesario para el menú móvil */
+}
+
+.navbar-brand a {
+  color: var(--color-texto-claro);
+  text-decoration: none;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.navbar-links {
+  list-style: none;
+  display: flex;
+  align-items: center; /* Alinea verticalmente los botones */
+  margin: 0;
+  padding: 0;
+  gap: 1.5rem; /* Espacio entre elementos */
+}
+
+.navbar-links li {
+  padding: 0;
+}
+
+/* ... (tus estilos de .login-button y .logout-button siguen aquí) ... */
+.login-button {
+  display: inline-block;
+  background-color: var(--color-primario);
+  color: var(--color-texto-claro);
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  text-decoration: none;
+  font-family: var(--font-principal);
+  font-size: 1rem;
+  cursor: pointer;
+  border: none;
+}
+.login-button:hover {
+  background-color: var(--color-primario-hover);
+}
+.logout-button {
+  display: inline-block;
+  background-color: var(--color-peligro);
+  color: var(--color-texto-claro);
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  border: none;
+  font-family: var(--font-principal);
+  font-size: 1rem;
+  cursor: pointer;
+}
+.logout-button:hover {
+  background-color: var(--color-peligro-hover);
+}
+
+
+/* --- INICIO DE ESTILOS RESPONSIVOS --- */
+
+/* 1. Estilos para el botón de hamburguesa (oculto por defecto) */
+.hamburger-button {
+  display: none; /* Oculto en pantallas grandes */
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem;
+}
+
+.hamburger-icon {
+  display: block;
+  width: 25px;
+  height: 3px;
+  background-color: var(--color-texto-claro);
+  position: relative;
+  transition: background-color 0.3s ease;
+}
+
+/* Las otras dos líneas del icono (antes y después) */
+.hamburger-icon::before,
+.hamburger-icon::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 3px;
+  background-color: var(--color-texto-claro);
+  left: 0;
+  transition: transform 0.3s ease;
+}
+
+.hamburger-icon::before {
+  top: -8px;
+}
+
+.hamburger-icon::after {
+  bottom: -8px;
+}
+
+
+/* 2. Media Query: se aplica en pantallas de 768px o menos */
+@media (max-width: 768px) {
+  
+  /* 3. Oculta los enlaces de la barra */
+  .navbar-links {
+    /* MEJORA 1: Animación de deslizamiento */
+    max-height: 0; /* Oculto por defecto */
+    overflow: hidden; /* Oculta el contenido que se desborda */
+    transition: max-height 0.4s ease-in-out; /* La animación */
+    
+    /* Estilos del menú desplegable */
+    display: flex; /* Sigue siendo flex, pero vertical */
+    flex-direction: column;
+    position: absolute;
+    top: 65px; /* Altura de tu navbar (ajustar si es necesario) */
+    left: 0;
+    width: 100%;
+    background-color: var(--color-fondo-oscuro);
+    padding: 0; /* Lo quitamos de aquí para ponerlo en los 'li' */
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  }
+
+  /* 4. Estilo para el menú "abierto" */
+  .navbar-links.active {
+    max-height: 500px; /* Un valor alto para mostrar el contenido */
+    padding: 1rem 0; /* Devuelve el padding cuando está abierto */
+  }
+
+  .navbar-links li {
+    width: 100%;
+    text-align: center;
+    padding: 0; /* Lo quitamos de aquí */
+  }
+
+  /* MEJORA 2: Botones/Enlaces de ancho completo */
+  .navbar-links .login-button,
+  .navbar-links .logout-button {
+    display: block; /* Ocupa todo el ancho */
+    width: 90%; /* Un poco de margen a los lados */
+    margin: 0.5rem auto; /* Centrado y espaciado */
+    padding: 1rem; /* Más alto para que sea fácil de tocar */
+    box-sizing: border-box; /* Asegura que el padding no rompa el ancho */
+  }
+
+  /* 5. Muestra el botón de hamburguesa */
+  .hamburger-button {
+    display: block;
+  }
+}

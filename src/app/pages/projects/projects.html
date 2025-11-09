@@ -1,0 +1,19 @@
+<div class="projects-container">
+  <h2>Mis Proyectos</h2>
+
+  @if (projects$ | async; as projects) {
+    <div class="projects-grid">
+
+      @for (p of projects; track p.id) {
+        <app-project-card 
+          [project]="p"
+          (projectSelected)="handleProjectSelected($event)">
+        </app-project-card>
+      } @empty {
+        <p>No hay proyectos para mostrar.</p>
+      }
+    </div>
+  } @else {
+    <p>Cargando proyectos...</p>
+  }
+</div>

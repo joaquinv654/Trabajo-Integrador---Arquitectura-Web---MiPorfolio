@@ -1,0 +1,11 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* Fuerza al componente a tener, como mínimo, la altura de la pantalla */
+}
+
+main {
+  flex: 1; /* ¡Esta es la línea clave! */
+  /* 'flex: 1' le dice a 'main' que crezca y ocupe todo el espacio 
+     disponible entre el header y el footer. */
+}

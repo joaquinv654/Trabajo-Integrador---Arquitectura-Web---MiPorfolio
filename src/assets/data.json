@@ -1,0 +1,25 @@
+{
+  "profile": {
+    "name": "Joaquin Vai",
+    "title": "Desarrollador/a Web | Estudiante de Arquitectura Web",
+    "bio": "Una breve biografía sobre ti..."
+  },
+  "projects": [
+    {
+      "id": 1,
+      "title": "Proyecto Integrador CAECE",
+      "description": "Descripción de este proyecto.",
+      "technologies": ["Angular", "TypeScript", "Netlify"]
+    },
+    {
+      "id": 2,
+      "title": "Otro Proyecto",
+      "description": "Descripción de otro proyecto que hayas hecho.",
+      "technologies": ["HTML", "CSS", "JavaScript"]
+    }
+  ],
+  "contact": {
+    "email": "joaquinvai654@gmail.com",
+    "linkedin": "joaquinvai"
+  }
+}

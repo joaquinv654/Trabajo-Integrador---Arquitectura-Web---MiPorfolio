@@ -1,0 +1,35 @@
+/* :host le dice al componente <app-project-card> 
+  que se comporte como un bloque en la grilla.
+*/
+:host {
+  display: block;
+}
+
+.project-card {
+  border: 1px solid var(--color-borde);
+  border-radius: 8px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  /* Esto asegura que todas las tarjetas tengan la misma altura */
+  height: 100%; 
+  box-sizing: border-box; /* Para que el padding no afecte el tamaño */
+}
+
+.project-card h3 {
+  margin-top: 0;
+  font-size: 1.5rem;
+}
+
+.technologies {
+  margin-top: 1rem;
+}
+
+.technologies span {
+  display: inline-block;
+  background-color: #eee;
+  padding: 0.25rem 0.75rem;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  margin-right: 0.5rem;
+  margin-bottom: 0.5rem;
+}

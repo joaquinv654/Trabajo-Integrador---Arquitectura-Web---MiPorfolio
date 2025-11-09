@@ -1,0 +1,23 @@
+<footer class="footer-container">
+  <div class="footer-content">
+
+    @if (contact$ | async; as contact) {
+      <div class="footer-section">
+        <h4>Contacto</h4>
+        <a [href]="'mailto:' + contact.email">{{ contact.email }}</a>
+        <a [href]="contact.linkedin" target="_blank">LinkedIn</a>
+      </div>
+    } @else {
+      <p>Cargando contacto...</p>
+    }
+
+    <div class="footer-section">
+      <h4>Créditos</h4>
+      <p>Sitio creado para el Trabajo Integrador de Arquitectura Web - Universidad CAECE.</p>
+    </div>
+  </div>
+
+  <div class="footer-copyright">
+    <p>© 2025 Tu Nombre Completo. Todos los derechos reservados.</p>
+  </div>
+</footer>

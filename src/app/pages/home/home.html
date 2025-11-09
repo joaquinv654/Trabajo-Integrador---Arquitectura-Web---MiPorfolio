@@ -1,0 +1,13 @@
+<div class="home-container">
+  @if (profile$ | async; as profile) {
+
+    <h1>{{ profile.name }}</h1>
+    <h2>{{ profile.title }}</h2>
+    <p>{{ profile.bio }}</p>
+
+  } @else {
+
+    <p>Cargando perfil...</p>
+
+  }
+</div>
