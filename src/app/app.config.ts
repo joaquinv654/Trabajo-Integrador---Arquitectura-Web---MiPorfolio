@@ -20,7 +20,7 @@ export const authConfig: AuthConfig = {
 
   // 5. ¡REEMPLAZA ESTE ID! 
   // (Debe ser el 'Client-id' de la pestaña 'Protocolo' de WSO2)
-  clientId: 'My00NTmNyd53gRnQp8R7E_Tmbega', 
+  clientId: 'nU1AXNhUH4lDMx9ktBn8kyfuqHoa', 
 
   // 6. Valores estándar de la guía
   responseType: 'code',
