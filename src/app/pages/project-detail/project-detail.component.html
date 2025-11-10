@@ -1,0 +1,27 @@
+<!-- 1. Contenedor principal -->
+<div class="project-detail-container">
+
+  <!-- 2. Usa @if con el pipe 'async' para esperar a que 'project$' resuelva -->
+  @if (project$ | async; as project) {
+    
+    <!-- 3. Muestra los detalles del proyecto -->
+    <h1>{{ project.title }}</h1>
+    
+    <p class="description">{{ project.description }}</p>
+
+    <h4>Tecnologías Utilizadas:</h4>
+    <div class="technologies">
+      <!-- 4. Itera sobre las tecnologías -->
+      @for (tech of project.technologies; track $index) {
+        <span>{{ tech }}</span>
+      }
+    </div>
+
+    <!-- 5. Enlace para volver a la lista de proyectos -->
+    <a routerLink="/proyectos" class="back-link">Volver a Proyectos</a>
+
+  } @else {
+    <!-- 6. Se muestra si el ID no se encuentra o mientras carga -->
+    <p>Cargando proyecto o proyecto no encontrado...</p>
+  }
+</div>

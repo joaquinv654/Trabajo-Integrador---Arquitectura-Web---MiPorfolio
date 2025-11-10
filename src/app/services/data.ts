@@ -1,6 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-// 1. Importa 'shareReplay' y 'map' de RxJS
+// 1. Importa 'map' y 'shareReplay' de RxJS
 import { Observable, map, shareReplay } from 'rxjs'; 
 
 // 2. Define las "interfaces" para tipar tus datos
@@ -37,35 +37,42 @@ export class DataService {
   private http = inject(HttpClient); // Inyecta el cliente HTTP
   private dataUrl = 'assets/data.json'; // Ruta a tu archivo JSON
 
-  // 4. --- ¡MEJORA APLICADA! ---
-  //    Crea un Observable "padre" que hace la llamada HTTP UNA SOLA VEZ.
+  // 4. Observable "padre" que cachea la llamada HTTP a data.json
   private allData$: Observable<AppData> = this.http.get<AppData>(this.dataUrl).pipe(
-    // 5. 'shareReplay(1)' cachea la última respuesta (1) y la comparte
-    //    con todos los suscriptores. Evita llamadas HTTP duplicadas.
-    shareReplay(1)
+    shareReplay(1) // 5. Cachea la respuesta y la comparte con todos los suscriptores
   );
 
   /** Petición GET 1: Obtener solo el perfil */
   getProfile(): Observable<Profile> {
-    // 6. Se suscribe al observable cacheado y extrae 'profile'
     return this.allData$.pipe(
-      map(data => data.profile)
+      map(data => data.profile) // 6. Extrae 'profile' de los datos cacheados
     );
   }
 
   /** Petición GET 2: Obtener solo los proyectos */
   getProjects(): Observable<Project[]> {
-    // 7. Se suscribe al observable cacheado y extrae 'projects'
     return this.allData$.pipe(
-      map(data => data.projects)
+      map(data => data.projects) // 7. Extrae 'projects' de los datos cacheados
     );
   }
 
   /** Petición GET 3: Obtener solo el contacto */
   getContact(): Observable<Contact> {
-    // 8. Se suscribe al observable cacheado y extrae 'contact'
     return this.allData$.pipe(
-      map(data => data.contact)
+      map(data => data.contact) // 8. Extrae 'contact' de los datos cacheados
+    );
+  }
+  
+  // --- ¡ESTE ES EL MÉTODO NUEVO QUE ARREGLA EL ERROR! ---
+  /** Petición GET 4: Obtener un solo proyecto por su ID */
+  getProjectById(id: number): Observable<Project | undefined> {
+    // 9. Usa el observable cacheado 'allData$'
+    return this.allData$.pipe(
+      // 10. Extrae solo el array de proyectos
+      map(data => data.projects),
+      // 11. Usa el 'map' de RxJS para transformar el array...
+      // 12. ...usando el '.find()' de JavaScript para encontrar el proyecto
+      map(projects => projects.find(p => p.id === id))
     );
   }
 }
