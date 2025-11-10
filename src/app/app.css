@@ -1,11 +1,12 @@
+/* :host se refiere al propio componente <app-root> */
 :host {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh; /* Fuerza al componente a tener, como mínimo, la altura de la pantalla */
+  display: flex;                /* Usa Flexbox para el layout */
+  flex-direction: column;       /* Apila header, main y footer verticalmente */
+  min-height: 100vh;            /* Asegura que la app ocupe al menos toda la altura de la pantalla */
 }
 
 main {
-  flex: 1; /* ¡Esta es la línea clave! */
-  /* 'flex: 1' le dice a 'main' que crezca y ocupe todo el espacio 
-     disponible entre el header y el footer. */
+  flex: 1;                      /* "Sticky Footer":
+                                   Hace que 'main' crezca y ocupe todo el espacio vertical
+                                   disponible, empujando el footer hacia abajo. */
 }

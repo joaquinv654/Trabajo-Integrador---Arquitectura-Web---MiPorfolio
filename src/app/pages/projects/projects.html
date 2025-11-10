@@ -1,19 +1,31 @@
 <div class="projects-container">
   <h2>Mis Proyectos</h2>
 
+  <!-- 1. Usa @if con 'async' pipe para esperar el array de proyectos -->
   @if (projects$ | async; as projects) {
     <div class="projects-grid">
 
+      <!-- 2. Usa @for para iterar sobre el array 'projects' -->
+      <!--    'track p.id' es crucial para el rendimiento del bucle -->
       @for (p of projects; track p.id) {
+        
+        <!-- 
+          [project]="p": Pasa el proyecto 'p' al @Input del hijo
+          (projectSelected)="..." : Escucha el @Output del hijo
+                                   y llama a 'handleProjectSelected' cuando ocurre
+        -->
         <app-project-card 
           [project]="p"
           (projectSelected)="handleProjectSelected($event)">
         </app-project-card>
+      
       } @empty {
+        <!-- 3. Se muestra si el array 'projects' está vacío -->
         <p>No hay proyectos para mostrar.</p>
       }
     </div>
   } @else {
+    <!-- 4. Se muestra mientras se cargan los datos -->
     <p>Cargando proyectos...</p>
   }
 </div>

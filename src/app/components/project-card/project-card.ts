@@ -1,8 +1,8 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core'; // <-- 1. Importa Input
-import { Project } from '../../services/data'; // <-- 2. Importa la interface 'Project'
+import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Project } from '../../services/data'; // 1. Importa la interface del Proyecto
 
 @Component({
-  selector: 'app-project-card',
+  selector: 'app-project-card', // 2. Selector <app-project-card>
   standalone: true,
   imports: [],
   templateUrl: './project-card.html',
@@ -10,13 +10,15 @@ import { Project } from '../../services/data'; // <-- 2. Importa la interface 'P
 })
 export class ProjectCardComponent {
 
-  // 3. Define el Input. 
-  // 'project' es el nombre de la propiedad.
-  // El '!' le dice a TypeScript: "confía en mí, el Padre siempre me dará esto".
+  // 3. @Input(): Recibe datos del componente Padre (ProjectsComponent)
   @Input() project!: Project;
-  @Output() projectSelected = new EventEmitter<Project>()
+
+  // 4. @Output(): Emite un evento hacia el componente Padre
+  @Output() projectSelected = new EventEmitter<Project>();
+
+  // 5. Esta función se llama al hacer clic en la tarjeta
   onCardClick() {
-    // 4. Emite el evento "hacia arriba" al Padre, enviando este proyecto.
+    // 6. Emite el evento 'projectSelected' con los datos de este proyecto
     this.projectSelected.emit(this.project);
   }
 }

@@ -1,28 +1,26 @@
 import { Component, inject } from '@angular/core';
-import { DataService, Profile } from '../../services/data'; // <-- 1. Importa el servicio y la interface
+import { DataService, Profile } from '../../services/data'; // 1. Importa el servicio y la interface
 import { Observable } from 'rxjs';
-import { AsyncPipe } from '@angular/common'; // <-- 2. Importa AsyncPipe
+import { AsyncPipe } from '@angular/common'; // 2. Importa AsyncPipe
 
 @Component({
   selector: 'app-home',
   standalone: true,
   imports: [
-    AsyncPipe // <-- 3. Añade AsyncPipe a los imports
+    AsyncPipe // 3. Necesario para el pipe '| async'
   ],
   templateUrl: './home.html',
   styleUrl: './home.css'
 })
 export class HomeComponent {
 
-  // 4. Inyecta el servicio
-  private dataService = inject(DataService);
+  private dataService = inject(DataService); // 4. Inyecta el servicio de datos
 
-  // 5. Crea una variable "Observable" para el perfil.
-  // El $ al final es una convención para indicar que es un Observable.
+  // 5. Declara el Observable para el perfil
   public profile$: Observable<Profile>;
 
   constructor() {
-    // 6. Llama al método del servicio para obtener los datos
+    // 6. Obtiene los datos del servicio
     this.profile$ = this.dataService.getProfile();
   }
 }

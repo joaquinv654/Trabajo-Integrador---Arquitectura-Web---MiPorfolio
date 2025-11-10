@@ -1,6 +1,4 @@
-/* Definimos nuestras variables de diseño globales.
-  El doble guion (--) es la sintaxis de CSS para una variable.
-*/
+/* :root es donde se definen las variables CSS globales */
 :root {
   /* Paleta de Colores */
   --color-primario: #007bff;
@@ -9,19 +7,16 @@
   --color-texto-claro: #ffffff;
   --color-texto-secundario: #aaa;
   --color-borde: #ddd;
-  --color-peligro: #dc3545;       /* Un rojo estándar (Bootstrap "danger") */
-  --color-peligro-hover: #c82333; /* Un rojo más oscuro para el hover */
+  --color-peligro: #dc3545;
+  --color-peligro-hover: #c82333;
 
-  /* (Opcional) Tipografía */
-  /* Usamos una pila de fuentes "limpias" que la mayoría 
-     de los sistemas operativos tiene. */
+  /* Tipografía */
   --font-principal: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, 
                     Helvetica, Arial, sans-serif, "Apple Color Emoji", 
                     "Segoe UI Emoji", "Segoe UI Symbol";
-                  
 }
 
-/* You can add global styles to this file, and also import other style files */
+/* Estilos de reseteo globales */
 html, body {
   height: 100%;
 }
@@ -29,5 +24,5 @@ html, body {
 body {
   margin: 0;
   height: 100%;
-  font-family: var(--font-principal); /* <-- AÑADE ESTO */
+  font-family: var(--font-principal); /* Asigna la fuente principal al body */
 }

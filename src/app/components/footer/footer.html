@@ -1,13 +1,16 @@
 <footer class="footer-container">
   <div class="footer-content">
 
+    <!-- 1. Usa @if con 'async' pipe para esperar los datos de contacto -->
     @if (contact$ | async; as contact) {
       <div class="footer-section">
         <h4>Contacto</h4>
+        <!-- 2. Binding de atributo [href] para crear el enlace mailto: -->
         <a [href]="'mailto:' + contact.email">{{ contact.email }}</a>
         <a [href]="contact.linkedin" target="_blank">LinkedIn</a>
       </div>
     } @else {
+      <!-- 3. Mensaje de carga -->
       <p>Cargando contacto...</p>
     }
 

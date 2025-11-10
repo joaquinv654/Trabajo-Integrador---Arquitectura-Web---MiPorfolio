@@ -1,33 +1,35 @@
 import { Component, inject } from '@angular/core';
-import { DataService, Project } from '../../services/data'; // <-- 1. Importa el servicio y la interface Project
+import { DataService, Project } from '../../services/data'; // 1. Importa servicio e interface
 import { Observable } from 'rxjs';
-import { AsyncPipe } from '@angular/common'; // <-- 2. Importa AsyncPipe
-import { ProjectCardComponent } from '../../components/project-card/project-card';
+import { AsyncPipe } from '@angular/common'; // 2. Importa AsyncPipe
+import { ProjectCardComponent } from '../../components/project-card/project-card'; // 3. Importa el componente hijo
 
 @Component({
   selector: 'app-projects',
   standalone: true,
   imports: [
-    AsyncPipe, // <-- 3. Añade AsyncPipe
-    ProjectCardComponent
+    AsyncPipe, // 4. Necesario para @if
+    ProjectCardComponent // 5. Incluye el componente hijo
   ],
   templateUrl: './projects.html',
   styleUrl: './projects.css'
 })
 export class ProjectsComponent {
 
-  private dataService = inject(DataService);
+  private dataService = inject(DataService); // 6. Inyecta el servicio de datos
 
-  // 4. Crea el Observable para la LISTA de proyectos
-  public projects$: Observable<Project[]>; // (Ya no necesitas '| null')
+  // 7. Declara el Observable para el *array* de proyectos
+  public projects$: Observable<Project[]>; 
 
   constructor() {
-    // 5. Llama al método getProjects() del servicio
+    // 8. Obtiene el array de proyectos del servicio
     this.projects$ = this.dataService.getProjects();
   }
 
+  // 9. Esta función se activa por el (projectSelected) del componente hijo
   handleProjectSelected(selectedProject: Project) {
-    // 2. Por ahora, solo muéstralo en consola
-    console.log('¡Evento recibido por el Padre!', selectedProject.title);
+    // 10. Por ahora, solo muéstralo en consola
+    //     (Aquí podrías abrir un modal o navegar a una ruta de detalle)
+    console.log('Proyecto seleccionado por el hijo:', selectedProject.title);
   }
 }

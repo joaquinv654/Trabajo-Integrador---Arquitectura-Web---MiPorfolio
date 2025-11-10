@@ -1,22 +1,18 @@
 import { inject } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
-// 1. ¡Importa NUESTRO AuthService en su lugar!
-// (La librería OIDC ya no se importa aquí)
-import { AuthService } from './auth'; 
+import { AuthService } from './auth'; // 1. Importa NUESTRO AuthService
 
+// 2. Define un Guardia de Ruta funcional
 export const authGuard: CanActivateFn = (route, state) => {
   
-  // 2. Inyecta nuestro AuthService y el Router
-  const authService = inject(AuthService);
-  const router = inject(Router);
+  const authService = inject(AuthService); // 3. Inyecta el servicio de Auth
+  const router = inject(Router); // 4. Inyecta el Router
 
-  // 3. Llama a nuestro método síncrono isLoggedIn()
-  //    Este método es el que SÍ revisa el token instantáneamente.
+  // 5. Comprueba si el usuario está logueado
   if (authService.isLoggedIn()) {
-    return true; // ¡Permitido! El usuario puede pasar.
+    return true; // 6. Permitido: El usuario puede pasar.
   } else {
-    // 4. ¡Bloqueado! Redirige al home 
-    //    (donde el header mostrará "Login")
+    // 7. Bloqueado: Redirige al home
     return router.createUrlTree(['/']); 
   }
 };

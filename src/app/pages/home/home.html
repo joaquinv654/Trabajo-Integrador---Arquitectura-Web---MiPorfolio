@@ -1,13 +1,14 @@
 <div class="home-container">
+  <!-- 1. Usa @if con 'async' pipe para esperar los datos del perfil -->
   @if (profile$ | async; as profile) {
 
+    <!-- 2. Muestra los datos del perfil si existen -->
     <h1>{{ profile.name }}</h1>
     <h2>{{ profile.title }}</h2>
     <p>{{ profile.bio }}</p>
 
   } @else {
-
+    <!-- 3. Muestra "Cargando..." mientras espera -->
     <p>Cargando perfil...</p>
-
   }
 </div>

@@ -1,22 +1,22 @@
-import { Component } from '@angular/core'; // El import de 'signal' no lo usaremos aquí.
+import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 
-// 1. IMPORTA TUS COMPONENTES
+// 1. Importa los componentes del "marco"
 import { HeaderComponent } from './components/header/header';
 import { FooterComponent } from './components/footer/footer';
 
 
 @Component({
-  selector: 'app-root',
-  standalone: true, // Esto es importante
+  selector: 'app-root', // 2. Selector (usado en index.html)
+  standalone: true, 
   imports: [
-    RouterOutlet,
-    HeaderComponent, // 2. AÑADE EL HEADER AQUÍ
-    FooterComponent  // 3. AÑADE EL FOOTER AQUÍ
+    RouterOutlet, // 3. El contenedor para las páginas (Home, Projects)
+    HeaderComponent, // 4. El Header
+    FooterComponent // 5. El Footer
   ],
-  templateUrl: './app.component.html', // 4. CORRIGE EL NOMBRE DEL ARCHIVO HTML
-  styleUrl: './app.css' // 5. (Este es el nombre de estilos estándar)
+  templateUrl: './app.component.html', // 6. Plantilla HTML asociada
+  styleUrl: './app.css' // 7. Hoja de estilos asociada
 })
-export class AppComponent { // 6. (Este es el nombre de clase estándar)
-  title = 'mi-portafolio';
+export class AppComponent {
+  title = 'mi-portafolio'; // 8. Propiedad del componente (ya no se usa en el HTML)
 }

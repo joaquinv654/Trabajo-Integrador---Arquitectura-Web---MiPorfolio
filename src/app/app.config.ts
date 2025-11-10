@@ -1,68 +1,50 @@
 import { ApplicationConfig, APP_INITIALIZER, provideZoneChangeDetection } from '@angular/core';
 import { provideRouter } from '@angular/router';
+import { provideHttpClient } from '@angular/common/http'; // 1. Proveedor para peticiones HTTP
+import { provideOAuthClient, OAuthService, AuthConfig } from 'angular-oauth2-oidc'; // 2. Proveedores OIDC
 
-// 1. Importa los proveedores de HTTP y OIDC
-import { provideHttpClient } from '@angular/common/http';
-import { provideOAuthClient, OAuthService, AuthConfig } from 'angular-oauth2-oidc';
+import { routes } from './app.routes'; // 3. Importa tus rutas
 
-import { routes } from './app.routes';
-
-// 2. Esta es la configuración de OIDC para WSO2 (basada en tu guía)
+// 4. Configuración de OIDC (WSO2)
+// RECOMENDACIÓN: Mover estos valores a /src/environments/environment.ts
 export const authConfig: AuthConfig = {
-  
-  // 3. ¡REEMPLAZA ESTA URL! 
-  // (Debe ser la URL del 'Issuer' de tu panel de WSO2)
-  // (Tu guía de práctica usa 'https://localhost:9443/oauth2/token', ¡verifica la tuya!)
-  issuer: 'https://localhost:9443/oauth2/token', 
-
-  // 4. Esta es la URL a la que WSO2 te redirigirá después del login
-  redirectUri: window.location.origin, // (Esto será 'http://localhost:4200')
-
-  // 5. ¡REEMPLAZA ESTE ID! 
-  // (Debe ser el 'Client-id' de la pestaña 'Protocolo' de WSO2)
-  clientId: 'nU1AXNhUH4lDMx9ktBn8kyfuqHoa', 
-
-  // 6. Valores estándar de la guía
-  responseType: 'code',
-  scope: 'openid profile email internal_login',
-  
-  // 7. (Página 13) ¡Muy importante para WSO2 local!
-  strictDiscoveryDocumentValidation: false,
+  issuer: 'https://localhost:9443/oauth2/token', // 5. URL del Emisor WSO2
+  redirectUri: window.location.origin, // 6. URL de retorno (tu app)
+  clientId: 'nU1AXNhUH4lDMx9ktBn8kyfuqHoa', // 7. Client ID de WSO2
+  responseType: 'code', // 8. Flujo de Código de Autorización
+  scope: 'openid profile email internal_login', // 9. Datos que pides al usuario
+  strictDiscoveryDocumentValidation: false, // 10. Necesario para WSO2 local (certificados autofirmados)
 };
 
-// 8. Esta función se ejecuta ANTES de que Angular arranque
-// Carga la configuración de WSO2 e intenta loguear si ya hay un token en la URL
+// 11. Función de inicialización
+//     Se ejecuta ANTES de que Angular arranque
 function initializeOAuth(oauthService: OAuthService): () => Promise<void> {
   return () => {
-    oauthService.configure(authConfig);
+    oauthService.configure(authConfig); // 12. Configura el servicio
     
-    // 9. ¡AQUÍ ESTÁ LA CORRECCIÓN!
-    // Envolvemos la función en un .then() para que 
-    // la promesa devuelva 'void' en lugar de 'boolean'.
+    // 13. Carga la config del servidor OIDC e intenta loguearse
+    //     (si venimos de una redirección con un código)
     return oauthService.loadDiscoveryDocumentAndTryLogin()
       .then(() => {
-        // (Opcional: puedes añadir lógica aquí si es necesario después de cargar)
+        // 14. Corrección: El .then() asegura que la función devuelva Promise<void>
       });
   };
 }
 
-// 10. Esta es la configuración principal de tu aplicación
+// 15. Configuración principal de la aplicación
 export const appConfig: ApplicationConfig = {
   providers: [
-    // (Tus proveedores existentes)
     provideZoneChangeDetection({ eventCoalescing: true }),
-    provideRouter(routes),
+    provideRouter(routes), // 16. Registra las rutas
+    provideHttpClient(), // 17. Registra el HttpClient (necesario para OIDC)
+    provideOAuthClient(), // 18. Registra el OAuthService
 
-    // 11. Añadimos los nuevos proveedores
-    provideHttpClient(), // Necesario para la librería OIDC
-    provideOAuthClient(), // Provee el OAuthService
-
-    // 12. Este es el "arranque"
-    // Le dice a Angular que ejecute 'initializeOAuth' ANTES de iniciar la app
+    // 19. Define el "token" APP_INITIALIZER para ejecutar nuestra función
+    //     de arranque 'initializeOAuth' antes de que la app se inicie.
     {
       provide: APP_INITIALIZER,
       useFactory: initializeOAuth,
-      deps: [OAuthService],
+      deps: [OAuthService], // 20. Inyecta el OAuthService en nuestra función
       multi: true
     }
   ]

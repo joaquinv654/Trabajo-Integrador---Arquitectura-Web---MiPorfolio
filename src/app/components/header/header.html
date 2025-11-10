@@ -1,33 +1,29 @@
 <nav class="navbar">
   <div class="navbar-brand">
-    <!-- 1. Llama a closeMenu() por si navegan al home desde el menú móvil -->
+    <!-- 1. Enlace al Home, cierra el menú móvil si está abierto -->
     <a routerLink="/" (click)="closeMenu()">Mi Portafolio</a>
   </div>
 
-  <!-- 2. Botón de Hamburguesa (solo visible en móvil) -->
+  <!-- 2. Botón de Hamburguesa, llama a toggleMenu() -->
   <button class="hamburger-button" (click)="toggleMenu()">
-    <!-- 3. Icono de hamburguesa (hecho con CSS) -->
     <span class="hamburger-icon"></span>
   </button>
 
-  <!-- 4. Añadimos [class.active] para mostrar/ocultar el menú -->
+  <!-- 3. Añade la clase 'active' si 'isMenuOpen()' es true -->
   <ul class="navbar-links" [class.active]="isMenuOpen()">
     <li>
+      <!-- 4. Muestra el enlace "Proyectos" solo si está logueado -->
       @if (isLoggedIn()) {
-      <!-- 5. Llama a closeMenu() al hacer clic en un enlace -->
       <a routerLink="/proyectos" class="login-button" (click)="closeMenu()">Proyectos</a>
       }
     </li>
 
+    <!-- 5. Muestra "Logout" o "Login" basado en el estado de isLoggedIn() -->
     @if (isLoggedIn()) {
     <li>
       <button (click)="logout()" class="logout-button">Logout</button>
     </li>
     } @else {
-    <!-- 
-        ¡AQUÍ ESTÁ EL CAMBIO!
-        Reemplazamos el <a routerLink="/login"> por un <button (click)="login()">
-      -->
     <li>
       <button (click)="login()" class="login-button">Login</button>
     </li>
